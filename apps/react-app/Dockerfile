@@ -1,0 +1,29 @@
+FROM node:16 AS builder
+WORKDIR /app
+RUN yarn global add turbo
+COPY . .
+RUN turbo prune --scope=react-app --docker
+
+FROM node:16 AS installer
+WORKDIR /app
+# First install dependencies (as they change less often)
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/yarn.lock ./yarn.lock
+RUN yarn install
+# Build the project and its dependencies
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
+RUN yarn turbo run build --filter=react-app...
+
+FROM node:16 AS runner
+WORKDIR /app
+EXPOSE 5173
+# Don't run production as root
+RUN addgroup --system --gid 1001 expressjs
+RUN adduser --system --uid 1001 expressjs
+COPY --from=installer /app .
+RUN chown -R expressjs .
+USER expressjs
+RUN cd apps/react-app
+CMD yarn run dev
