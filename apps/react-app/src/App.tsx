@@ -2,9 +2,12 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
+interface contact {
+  message: string
+}
 function App() {
   const [count, setCount] = useState(0)
-  const [contacts, setContacts] = useState([]);  
+  const [contacts, setContacts] = useState<contact>({message: 'CLICK HERE'});  
 
   const getData = () => {
     fetch("http://localhost:3001/api/data")
@@ -26,11 +29,8 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          The count is {count}
-        </button>
         <button onClick={() => getData()}>
-          The count is {contacts.message}
+          The API says {contacts.message}
         </button>
 
         <p>
