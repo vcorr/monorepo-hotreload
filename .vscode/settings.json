@@ -1,0 +1,10 @@
+{
+    "eslint.workingDirectories": [
+    "apps",
+    "packages"
+    ],
+    "yaml.schemas": {
+    
+    },
+    
+}

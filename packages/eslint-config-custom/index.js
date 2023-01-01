@@ -1,8 +1,29 @@
 module.exports = {
-  extends: ["next", "turbo", "prettier"],
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended", 
+    "prettier"
+  ],
+  parser: '@typescript-eslint/parser',
+  env: {
+    browser: true,
+    node: true,
+    es6: true,
+  },
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json"] 
+  },
   settings: {
     react: {
       version: "detect",
     },
   },
+  rules: {
+    // ...
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off"
+  }
+  
 };
