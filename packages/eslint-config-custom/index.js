@@ -24,6 +24,14 @@ module.exports = {
     // ...
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off"
-  }
+  },
+  overrides: [
+    {
+      files: ["**/__tests__/**/*"],
+      env: {
+        jest: true,
+      },
+    },
+  ],
   
 };

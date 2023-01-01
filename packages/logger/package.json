@@ -12,7 +12,8 @@
     "build": "tsc",
     "clean": "rm -rf dist",
     "dev": "tsc -w",
-    "test": "jest"
+    "test": "jest",
+    "lint": "TIMING=1 eslint --ext .ts \"src/**/*ts\"/"
   },
   "jest": {
     "preset": "jest-presets/jest/node"
@@ -20,7 +21,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.22",
     "eslint": "8.31.0",
-    "eslint-config-custom-server": "*",
+    "eslint-config-custom": "*",
     "jest": "^26.6.3",
     "jest-presets": "*",
     "tsconfig": "*",
