@@ -1,45 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
+import { trcp } from './trpc';
 
-interface contact {
-  message: any
+interface todo {
+  id: number,
+  text: string
 }
 function App() {
-  const [contacts, setContacts] = useState<contact>({message: 'CLICK HERE'});  
+  const [todos, setTodos] = useState<todo[]>();  
+  const [todo, setTodo] = useState<string>(''); 
 
-  const getData = () => {
-    fetch("http://localhost:3001/api/data")
-    .then((response) => response.json())
-    .then((r)=>{
-      setContacts(r);
-    })
+  const getTodos = () => {
+    trcp.getTodos
+      .query()
+      .then((todos)=>{
+        setTodos(todos);
+      })
   }
+  useEffect(()=>{getTodos()}, []);
+
+ const submit = async () => {
+  setTodo('');
+  await trcp.addTodo.mutate({text: todo});
+  getTodos();
+ }
 
   return (
-    <div className="App">
+    <div>
+      <h1>Caveman Todo</h1>
+      <input type="text" placeholder="Add a task..."   onKeyUp={e => {if(e.key === 'Enter') {submit();}} } onChange={e => setTodo(e.target.value)} value={todo} />
       <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <table>
+          <tbody>
+          {todos?.map((todo)=>(
+            <tr key={todo.id}>
+              <th>{todo.id}</th>
+              <td>{todo.text}</td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => getData()}>
-          The API says {contacts.message}
-        </button>
-
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more!
-        
-      </p>
     </div>
   )
 }

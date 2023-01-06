@@ -25,5 +25,7 @@ RUN adduser --system --uid 1001 expressjs
 COPY --from=installer /app .
 RUN chown -R expressjs .
 USER expressjs
+RUN mkdir ~/.cache
+RUN mkdir ~/.cache/yarn
 RUN cd apps/react-app
 CMD yarn run dev

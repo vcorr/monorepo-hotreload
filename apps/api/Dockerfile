@@ -2,7 +2,7 @@ FROM node:16 AS builder
 WORKDIR /app
 RUN yarn global add turbo
 COPY . .
-RUN turbo prune --scope=api --docker
+RUN turbo prune --scope=example-api --docker
 
 FROM node:16 AS installer
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN yarn install
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-RUN yarn turbo run build --filter=api...
+RUN yarn turbo run build --filter=example-api...
 
 FROM node:16 AS runner
 WORKDIR /app

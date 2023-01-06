@@ -1,6 +1,12 @@
 {
-  "name": "api",
+  "name": "example-api",
   "version": "0.0.0",
+  "description": "example api",
+  "main": "dist/index.js",
+  "types": "dist/server.d.ts",
+  "files": [
+    "/dist"
+  ],
   "private": true,
   "scripts": {
     "build": "tsc",
@@ -14,11 +20,14 @@
     "preset": "jest-presets/jest/node"
   },
   "dependencies": {
+    "@trpc/server": "^10.7.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "logger": "*",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "yup": "^0.32.11",
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
