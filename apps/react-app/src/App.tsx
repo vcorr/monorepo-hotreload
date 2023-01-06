@@ -26,11 +26,11 @@ function App() {
  }
 
   return (
-    <div>
-      <h1>Caveman Todo</h1>
-      <input type="text" placeholder="Add a task..."   onKeyUp={e => {if(e.key === 'Enter') {submit();}} } onChange={e => setTodo(e.target.value)} value={todo} />
+    <div className="overflow-x-auto">
+      <h1 className="text-5xl text-center font-bold">Caveman Todo</h1>
+      <input type="text" placeholder="Add a task..." className="input input-bordered w-full"  onKeyUp={e => {if(e.key === 'Enter') {submit();}} } onChange={e => setTodo(e.target.value)} value={todo} />
       <div>
-        <table>
+        <table className="table w-full">
           <tbody>
           {todos?.map((todo)=>(
             <tr key={todo.id}>
